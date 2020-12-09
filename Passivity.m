@@ -1,0 +1,10 @@
+clc;clear;
+A =  [ -1 0; 1 -1];
+B = [-4;1];
+C = [-100 10];
+D = 1;
+P = sdpvar(2);
+passivity_LMI = [[ A*P + P*A' P*B-C' ; B'*P-C  -D'-D] <= 0];
+opt = sdpsettings('verbose',0,'solver','mosek');
+optimize(passivity_LMI,[],opt);
+P = value(P);
